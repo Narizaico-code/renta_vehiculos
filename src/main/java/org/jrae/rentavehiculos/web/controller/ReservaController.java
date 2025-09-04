@@ -27,7 +27,7 @@ public class ReservaController {
     }
 
     public void cargarDatos(){
-        this.reservas = this.reservaService.listarCursos();
+        this.reservas = this.reservaService.listarRserva();
         this.reservas.forEach(curso -> logger.info(curso.toString() + sl));
     }
 

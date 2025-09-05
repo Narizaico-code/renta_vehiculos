@@ -1,4 +1,5 @@
 package org.jrae.rentavehiculos.dominio.service;
+
 import org.jrae.rentavehiculos.persistence.entity.Usuario;
 import java.util.List;
 public interface IUsuarioService {

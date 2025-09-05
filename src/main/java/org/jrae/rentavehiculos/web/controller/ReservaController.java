@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import org.jrae.rentavehiculos.dominio.service.IReservaService;
+import org.jrae.rentavehiculos.persistence.entity.Reserva;
 import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +28,12 @@ public class ReservaController {
     }
 
     public void cargarDatos(){
-        this.reservas = this.reservaService.listarRserva();
+        this.reservas = this.reservaService.listarReserva();
         this.reservas.forEach(curso -> logger.info(curso.toString() + sl));
     }
 
     public void agregarReserva(){
-        this.reservaSeleccionada = new Cursos();
+        this.reservaSeleccionada = new Reserva();
     }
 
     public void guardarReserva(){

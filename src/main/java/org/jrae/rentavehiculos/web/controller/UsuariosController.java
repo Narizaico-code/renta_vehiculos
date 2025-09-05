@@ -3,15 +3,18 @@ package org.jrae.rentavehiculos.web.controller;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import org.jrae.rentavehiculos.persistence.crud.Usuario;
+
 import jakarta.faces.view.ViewScoped;
 import lombok.Data;
 import org.jrae.rentavehiculos.dominio.service.IUsuarioService;
+import org.jrae.rentavehiculos.persistence.entity.Usuario;
 import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Data
@@ -57,7 +60,7 @@ public class UsuariosController {
 
     public void eliminarUsuario(){
         logger.info("Usuario a eliminar: " + this.usuarioSeleccionado);
-        this.usuarioSeleccionado.eliminarUsuario(usuarioSeleccionado);
+        this.usuarioService.eliminarUsuario(usuarioSeleccionado);
         this.usuarios.remove(usuarioSeleccionado);
         this.usuarioSeleccionado = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario eliminado"));

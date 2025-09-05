@@ -1,4 +1,5 @@
 package org.jrae.rentavehiculos.dominio.service;
+
 import org.jrae.rentavehiculos.persistence.crud.UsuarioCrud;
 import org.jrae.rentavehiculos.persistence.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package org.jrae.rentavehiculos.web.controller;
 
 import org.jrae.rentavehiculos.dominio.service.IUsuarioService;
+import org.jrae.rentavehiculos.persistence.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;

@@ -20,7 +20,7 @@ public class VehiculoService implements IVehiculoService{
 
     @Override
     public Vehiculo buscarPorId(Integer id) {
-        return findById(id).orElse(null);
+        return crud.findById(id).orElse(null);
     }
 
     @Override

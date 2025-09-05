@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Kinvana 2024060 - Vehículos</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
+    </h:head>
+    <h:body>
+        <p>Hola mundo, estoy en Server Faces, desde Spring Boot - Vehículos</p>
+        <div class="card">
+            <h:form id="formulario-vehiculos">
+                <!-- Mensaje Emergente -->
+                <p:growl id="mensaje_emergente" showDetails="true" />
+
+                <!-- Barra de Menú -->
+                <div class="card">
+                    <p:menubar>
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-home"
+                                    update=":formulario-vehiculos:tabla-vehiculos"
+                                    actionListener="#{vehiculoController.cargarDatos}"/>
+
+                        <p:menuitem value="Nuevo vehículo" icon="pi pi-fw pi-plus"
+                                    actionListener="#{vehiculoController.agregarVehiculo}"
+                                    update=":formulario-modal:ventana-vehiculo"
+                                    oncomplete="PF('ventanaModalVehiculo').show()"/>
+                    </p:menubar>
+                </div>
+
+                <!-- Tabla de Vehículos -->
+                <div class="card">
+                    <p:dataTable value="#{vehiculoController.vehiculos}" var="vehiculo"
+                                 id="tabla-vehiculos" widgetVar="tablaVehiculos">
+                        <!-- Título -->
+                        <f:facet name="header">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center
+                                            justify-content-center
+                                            w-20rem h-4rem
+                                            bg-yellow-500
+                                            font-bold
+                                            text-gray-900 border-round m-2">
+                                    <h3>Kinvana, vehículos</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+
+                        <!-- Columnas -->
+                        <p:column headerText="ID">
+                            <h:outputText value="#{vehiculo.codigoVehiculo}" />
+                        </p:column>
+                        <p:column headerText="MODELO">
+                            <h:outputText value="#{vehiculo.modelo}" />
+                        </p:column>
+                        <p:column headerText="AÑO">
+                            <h:outputText value="#{vehiculo.año}" />
+                        </p:column>
+                        <p:column headerText="PRECIO DIARIO">
+                            <h:outputText value="#{vehiculo.precioDiario}" />
+                        </p:column>
+                        <p:column headerText="DISPONIBILIDAD">
+                            <h:outputText value="#{vehiculo.disponible}" />
+                        </p:column>
+                        <p:column headerText="USUARIO">
+                            <h:outputText value="#{vehiculo.usuario != null ? vehiculo.usuario.nombre : 'No asignado'}" />
+                        </p:column>
+
+                        <!-- Opciones -->
+                        <p:column headerText="OPCIONES">
+                            <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary"
+                                             update=":formulario-modal:ventana-vehiculo"
+                                             process="@this" style="margin-right: 5rem" oncomplete="PF('ventanaModalVehiculo').show()">
+                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoController.vehiculoSeleccionado}"/>
+                                <p:resetInput target=":formulario-modal:ventana-vehiculo"/>
+                            </p:commandButton>
+                            <p:commandButton value="Eliminar" icon="pi pi-trash" class="ui-button-danger"
+                                             process="@this" oncomplete="PF('ventanaEliminarVehiculo').show()">
+                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoController.vehiculoSeleccionado}"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+            </h:form>
+
+            <!-- Formulario Modal para detalles de vehículo -->
+            <h:form id="formulario-modal">
+                <p:dialog header="Detalle de Vehículo" showEffect="fade"
+                          modal="true" widgetVar="ventanaModalVehiculo" responsive="true">
+                    <p:outputPanel id="ventana-vehiculo" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="modelo" >MODELO</p:outputLabel>
+                            <p:inputText id="modelo" required="true" value="#{vehiculoController.vehiculoSeleccionado.modelo}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="año" >AÑO</p:outputLabel>
+                            <p:inputText id="año" value="#{vehiculoController.vehiculoSeleccionado.año}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="precio" >PRECIO DIARIO</p:outputLabel>
+                            <p:inputText id="precio" value="#{vehiculoController.vehiculoSeleccionado.precioDiario}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="disponible" >DISPONIBILIDAD</p:outputLabel>
+                            <p:inputText id="disponible" value="#{vehiculoController.vehiculoSeleccionado.disponible}"/>
+                        </div>
+
+                        <!-- Campo para seleccionar el usuario -->
+                        <div class="field">
+                            <p:outputLabel for="usuario" >USUARIO</p:outputLabel>
+                            <p:selectOneMenu id="usuario" value="#{vehiculoController.vehiculoSeleccionado.usuario}">
+                                <f:selectItem itemLabel="Seleccione un usuario" itemValue="#{null}" />
+                                <f:selectItems value="#{vehiculoController.usuarios}" var="usuario" itemLabel="#{usuario.nombre}" itemValue="#{usuario}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" class="ui-button-primary"
+                                         process="ventana-vehiculo @this"
+                                         actionListener="#{vehiculoController.guardarVehiculo}"/>
+
+                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
+                                         onclick="PF('ventanaModalVehiculo').hide()" type="button"/>
+                    </f:facet>
+                </p:dialog>
+                <!-- Confirmación de eliminación de vehículo -->
+                <p:confirmDialog widgetVar="ventanaEliminarVehiculo" showEffect="fade" width="300" message="¿Desea eliminar el vehículo?"
+                                 header="Confirme su selección" severity="warn">
+                    <p:commandButton value="Sí" icon="pi pi-check" style="ui-button-primary"
+                                     process="@this" actionListener="#{vehiculoController.eliminarVehiculo}" oncomplete="PF('ventanaEliminarVehiculo').hide()"/>
+                    <p:commandButton value="No" icon="pi pi-times" style="ui-button-warning"
+                                     onclick="PF('ventanaEliminarVehiculo').hide()" type="button"/>
+                </p:confirmDialog>
+            </h:form>
+        </div>
+    </h:body>
+</h:html>

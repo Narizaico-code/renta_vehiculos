@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h = "http://xmlns.jcp.org/jsf/html"
+        xmlns:f = "http://xmlns.jcp.org/jsf/core"
+        xmlns:p = "http://primefaces.org/ui">
+  <h:head>
+    <title>Menu Principal</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
+
+    <style>
+      .center-card {
+          background-color: #007bff; /* Azul */
+          color: white; /* Texto blanco */
+          padding: 2rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          width: 350px;
+      }
+      body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-color: #f4f4f4;
+      }
+      h1 {
+          margin-bottom: 1rem;
+      }
+    </style>
+
+  </h:head>
+  <h:body>
+    <div class="center-card">
+
+    <h1>Bienvenido a Renta de Vehículos</h1>
+    <h:form>
+      <p:commandButton value="Iniciar Sesion"
+                       action="#{loginController}"
+                       ajax="false"
+                       styleClass="p-mb-3"/>
+
+      <p:commandButton value="Registrarse"
+                       action="#{loginController.ejecutar}"
+                       ajax="false"
+                       styleClass="p-mb-2"/>
+    </h:form>
+    </div>
+  </h:body>
+</h:html>

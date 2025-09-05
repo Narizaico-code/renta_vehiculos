@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 
 @Controller
 public class LoginController {
-    @Autowired
+   /* @Autowired
     private IUsuarioService usuarioService;
     private Usuario usuarioSeleccionado;
     @GetMapping("/login")
@@ -38,5 +38,5 @@ public class LoginController {
             return "login";
         }
 
-    }
+    }*/
 }
